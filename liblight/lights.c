@@ -179,7 +179,7 @@ static int set_speaker_light_locked(struct light_device_t *dev,
         if (red) {
             p = dutystr + sprintf(dutystr, "0");
             for (i = 1; i < LED_DUTY_STEPS; ++i) {
-                p += sprintf(p, ",%d", (min((100 * i * LED_RAMP_MS / LED_DUTY_STEPS) / LED_RAMP_MS, 100)) * red / 0xFF);
+                p += sprintf(p, " %d", (min((100 * i * LED_RAMP_MS / LED_DUTY_STEPS) / LED_RAMP_MS, 100)) * red / 0xFF);
             }
             p += sprintf(p, "\n");
 
@@ -199,7 +199,7 @@ static int set_speaker_light_locked(struct light_device_t *dev,
         if (green) {
             p = dutystr + sprintf(dutystr, "0");
             for (i = 1; i < LED_DUTY_STEPS; ++i) {
-                p += sprintf(p, ",%d", (min((100 * i * LED_RAMP_MS / LED_DUTY_STEPS) / LED_RAMP_MS, 100)) * green / 0xFF);
+                p += sprintf(p, " %d", (min((100 * i * LED_RAMP_MS / LED_DUTY_STEPS) / LED_RAMP_MS, 100)) * green / 0xFF);
             }
             p += sprintf(p, "\n");
 
@@ -219,7 +219,7 @@ static int set_speaker_light_locked(struct light_device_t *dev,
         if (blue) {
             p = dutystr + sprintf(dutystr, "0");
             for (i = 1; i < LED_DUTY_STEPS; ++i) {
-                p += sprintf(p, ",%d", (min((100 * i * LED_RAMP_MS / LED_DUTY_STEPS) / LED_RAMP_MS, 100)) * blue / 0xFF);
+                p += sprintf(p, " %d", (min((100 * i * LED_RAMP_MS / LED_DUTY_STEPS) / LED_RAMP_MS, 100)) * blue / 0xFF);
             }
             p += sprintf(p, "\n");
 
