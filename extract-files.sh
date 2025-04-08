@@ -59,9 +59,9 @@ function blob_fixup() {
         vendor/lib/mediadrm/libwvdrmengine.so)
         "${PATCHELF}" --replace-needed "libprotobuf-cpp-lite.so" "libprotobuf-cpp-lite-v29.so" "${2}"
             ;;
-        # Patch DRM blob to resolve moved symbol
-        vendor/lib64/libsettings.so)
-        "${PATCHELF}" --replace-needed "libprotobuf-cpp-full.so" "libprotobuf-cpp-full-v29.so" "${2}"
+        # Patch mm-pp-daemon to prevent ppd to poll it (infinite loop -> 100% CPU) 
+        vendor/bin/mm-pp-daemon)
+        sed -i 's|/sys/class/graphics/fb0/dyn_pu|/sys/class/graphics/fb0/disabl|g' "${2}"
             ;;
     esac
 }

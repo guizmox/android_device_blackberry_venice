@@ -47,6 +47,14 @@ on early-boot
     start vendor.qseecomd
 
 on boot
+
+    # ZRAM feature
+    # write /sys/block/zram0/disksize 1G
+    # exec u:r:system_server:s0 -- /system/bin/mkswap /dev/block/zram0
+    # exec u:r:system_server:s0 -- /system/bin/swapon /dev/block/zram0
+    # write /proc/sys/vm/swappiness 100
+
+    # BT 
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/type
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/state
     chmod 0660 /sys/class/rfkill/rfkill0/state
@@ -216,10 +224,10 @@ on property:ro.data.large_tcp_window_size=true
 on property:sys.sysctl.tcp_adv_win_scale=*
     write /proc/sys/net/ipv4/tcp_adv_win_scale ${sys.sysctl.tcp_adv_win_scale}
 
-service cnss-daemon /vendor/bin/cnss-daemon -n -l
-    class late_start
-    user system
-    group system inet net_admin wifi
+# service cnss-daemon /vendor/bin/cnss-daemon -n -l
+#     class late_start
+#     user system
+#     group system inet net_admin wifi
 
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start

@@ -102,11 +102,11 @@ service adsprpcd /vendor/bin/adsprpcd
     user media
     group media
 
-#service ppd /vendor/bin/mm-pp-daemon
-#    class hal
-#    user system
-#    socket pps stream 0660 system system
-#    group system graphics
+service ppd /vendor/bin/mm-pp-daemon
+    class late_start
+    user system
+    group system graphics
+    socket pps stream 0660 system system
 
 service energy-awareness /vendor/bin/energy-awareness
     class main

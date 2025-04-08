@@ -33,7 +33,9 @@ on boot
     # execute script to set initial CPU settings
     # don't run as a service to avoid race conditions
     exec - root root system -- /vendor/bin/init.venice.power.sh
-
+    # zram activation
+    exec - root root system -- /vendor/bin/init.qcom.zram.sh
+         
     # adaptive LMK
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
     write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
@@ -64,3 +66,13 @@ on post-fs
 service vtnvfsd /vendor/bin/vtnvfsd -b /dev/block/bootdevice/by-name -s boardid:/nvram/boardid:rw -s nvuser:/nvram/nvuser:rw -s perm:/nvram/perm:rw -s prdid:/nvram/prdid:rw -s blog:/nvram/blog:rw
    class core
    group nvram drmrpc
+   
+service vendor_prop_loader /vendor/bin/prop_loader
+    class early_hal
+    user root
+    group root net_raw bluetooth oem_2900
+    oneshot
+    disabled
+
+on property:ro.hwf.keypadlanguage=*
+    stop vendor_prop_loader

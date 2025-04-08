@@ -79,7 +79,7 @@
 
 #define KEYBOARD_FILE "/sys/class/leds/kpd-backlight/brightness"
 
-#define LED_DUTY_STEPS       50
+#define LED_DUTY_STEPS       20
 #define LED_RAMP_MS          500
 
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;

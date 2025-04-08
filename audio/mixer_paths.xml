@@ -42,7 +42,7 @@
     <ctl name="ADC6 Volume" value="19" />
     <ctl name="DEC1 Volume" value="84" />
     <ctl name="DEC2 Volume" value="84" />
-    <ctl name="DEC3 Volume" value="84" />
+    <ctl name="DEC3 Volume" value="92" />
     <ctl name="DEC4 Volume" value="84" />
     <ctl name="DEC5 Volume" value="84" />
     <ctl name="DEC6 Volume" value="84" />
@@ -164,7 +164,7 @@
     <ctl name="SLIM RX1 MUX" value="AIF1_PB" />
     <ctl name="EAR PA Gain" value="POS_6_DB" />
     <ctl name="SLIM RX2 MUX" value="ZERO" />
-    <ctl name="SPK DRV Volume" value="8" />
+    <ctl name="SPK DRV Volume" value="10" />
     <ctl name="AIF1_CAP Mixer SLIM TX3" value="0"/>
     <ctl name="AIF1_CAP Mixer SLIM TX4" value="0"/>
     <ctl name="AIF1_CAP Mixer SLIM TX7" value="0" />
@@ -1545,7 +1545,7 @@
     <path name="voice-headset-mic">
         <path name="headset-mic" />
         <path name="sidetone-headphones" />
-	<ctl name="ADC2 Volume" value="14" />
+		<ctl name="ADC2 Volume" value="14" />
     </path>
 
     <path name="speaker-and-headphones">
@@ -1587,7 +1587,7 @@
         <ctl name="ANC1 FB MUX" value="EAR_HPH_L" />
         <ctl name="ANC1 MUX" value="ADC3" />
         <ctl name="ANC2 MUX" value="ADC4" />
-	<ctl name="ADC3 Volume" value="8" />
+	<ctl name="ADC3 Volume" value="10" />
         <ctl name="ADC4 Volume" value="8" />
         <ctl name="HPHL Volume" value="20" />
         <ctl name="HPHR Volume" value="20" />
@@ -1625,7 +1625,7 @@
         <ctl name="ANC1 FB MUX" value="EAR_HPH_L" />
         <ctl name="ANC1 MUX" value="ADC3" />
         <ctl name="ANC2 MUX" value="ADC4" />
-        <ctl name="ADC3 Volume" value="8" />
+        <ctl name="ADC3 Volume" value="10" />
         <ctl name="ADC4 Volume" value="8" />
         <ctl name="HPHL Volume" value="20" />
         <ctl name="HPHR Volume" value="20" />
@@ -1654,7 +1654,7 @@
         <ctl name="ANC1 FB MUX" value="EAR_HPH_L" />
         <ctl name="ANC1 MUX" value="ADC3" />
         <ctl name="ANC2 MUX" value="ADC4" />
-        <ctl name="ADC3 Volume" value="8" />
+        <ctl name="ADC3 Volume" value="10" />
         <ctl name="ADC4 Volume" value="8" />
         <ctl name="HPHL Volume" value="20" />
         <ctl name="HPHR Volume" value="20" />
@@ -1707,7 +1707,7 @@
 
     <path name="voice-rec-mic">
         <path name="adc4" />
-        <ctl name="ADC4 Volume" value="12" />
+        <ctl name="ADC4 Volume" value="8" />
     </path>
 
     <path name="camcorder-mic">
@@ -1715,8 +1715,8 @@
         <ctl name="SLIM_0_TX Channels" value="Two" />
         <ctl name="SLIM TX7 MUX" value="DEC3" />
         <ctl name="DEC3 MUX" value="ADC4" />
-        <ctl name="ADC4 Volume" value="12" />
-        <ctl name="DEC3 Volume" value="84" />
+        <ctl name="ADC4 Volume" value="8" />
+        <ctl name="DEC3 Volume" value="92" />
         <ctl name="IIR1 INP1 MUX" value="DEC3" />
         <ctl name="AIF1_CAP Mixer SLIM TX8" value="1"/>
         <ctl name="SLIM TX8 MUX" value="DEC4" />
@@ -1724,7 +1724,7 @@
         <ctl name="ADC3 Volume" value="12" />
         <ctl name="DEC4 Volume" value="84" />
         <ctl name="IIR1 INP1 MUX" value="DEC4" />
-        <ctl name="ADC3 Volume" value="8" />
+        <ctl name="ADC3 Volume" value="10" />
         <ctl name="ADC4 Volume" value="8" />
     </path>
 
@@ -1820,10 +1820,18 @@
         <path name="dmic-endfire" />
     </path>
 
+    <path name="voice-rec-dmic-bs-fluence">
+        <path name="dmic-broadside" />
+    </path>
+
     <path name="voice-rec-dmic-ef-fluence">
         <path name="dmic-endfire" />
     </path>
 
+    <path name="voice-rec-dmic-ef-fluence-liquid">
+        <path name="dmic-endfire-liquid" />
+    </path>
+	
     <path name="handset-stereo-dmic-ef-liquid">
         <path name="handset-dmic-endfire" />
     </path>
@@ -1841,10 +1849,6 @@
     </path>
 
     <path name="voice-rec-dmic-ef-liquid">
-        <path name="dmic-endfire-liquid" />
-    </path>
-
-    <path name="voice-rec-dmic-ef-fluence-liquid">
         <path name="dmic-endfire-liquid" />
     </path>
 
