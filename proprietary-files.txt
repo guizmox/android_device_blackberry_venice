@@ -188,10 +188,14 @@ vendor/lib/libchromatix_s5k5e2_snapshot.so
 vendor/lib/libchromatix_s5k5e2_versions.so
 
 # Camera eeprom
-vendor/lib/libmmcamera_dw9761b_eeprom.so
+# vendor/lib/libmmcamera_dw9761b_eeprom.so
+vendor/lib/libmmcamera_bbrya2030_eeprom.so
+vendor/lib/libmmcamera_bbryimx230_eeprom.so
+vendor/lib64/libmmcamera_bbrya2030_eeprom.so
 
 # Camera firmware
 etc/firmware/cpp_firmware_v1_8_0.fw:vendor/firmware/cpp_firmware_v1_8_0.fw
+etc/firmware/camera/RumbaS4_SEMCO_10339.bin:vendor/firmware/RumbaS4_SEMCO_10339.bin
 
 # Camera sensors
 vendor/lib/libmmcamera_s5k3m2xm.so

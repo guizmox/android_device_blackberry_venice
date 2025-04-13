@@ -33,9 +33,7 @@ on boot
     # execute script to set initial CPU settings
     # don't run as a service to avoid race conditions
     exec - root root system -- /vendor/bin/init.venice.power.sh
-    # zram activation
-    exec - root root system -- /vendor/bin/init.qcom.zram.sh
-         
+ 
     # adaptive LMK
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
     write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
@@ -74,5 +72,14 @@ service vendor_prop_loader /vendor/bin/prop_loader
     oneshot
     disabled
 
+service venice_zram /system/bin/sh /vendor/bin/init.venice.zram.sh
+    class main
+    user root
+    group root system
+    oneshot
+    
 on property:ro.hwf.keypadlanguage=*
     stop vendor_prop_loader
+
+on property:sys.boot_completed=1
+    start venice_zram

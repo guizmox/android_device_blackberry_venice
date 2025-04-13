@@ -163,6 +163,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/input/stmpe.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/stmpe.kl \
     $(LOCAL_PATH)/input/stmpe.kcm:$(TARGET_COPY_OUT_VENDOR)/usr/keychars/stmpe.kcm
 
+
 # IPA
 PRODUCT_PACKAGES += \
     ipacm \
@@ -266,15 +267,20 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
 
+
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service-qti \
+    android.hardware.power@1.2-service-qti \
+    power.msm8992 \
     init.venice.power.sh \
+    init.venice.zram.sh \
     init.qcom.sh
 
-# ZRAM
-PRODUCT_PACKAGES += \
-    init.qcom.zram.sh \
+# Power
+# PRODUCT_PACKAGES += \
+#     android.hardware.power-service-qti \
+#     init.venice.power.sh \
+#     init.qcom.sh
 
 # Radio
 PRODUCT_PACKAGES += \
@@ -359,3 +365,5 @@ $(call inherit-product, vendor/blackberry/venice/venice-vendor.mk)
 $(call inherit-product-if-exists, vendor/partner/gms/products/gms.mk)
 
 $(call inherit-product-if-exists, vendor/gapps/arm/arm-vendor.mk)
+
+$(call inherit-product, vendor/qcom/opensource/power/power-vendor-product.mk)
