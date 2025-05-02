@@ -230,7 +230,7 @@
         <interface>
             <name>IDisplayColorCalibration</name>
             <instance>default</instance>
-        </interface>
+        </interface>                  
     </hal>
     <hal format="hidl">
         <name>vendor.qti.hardware.data.latency</name>

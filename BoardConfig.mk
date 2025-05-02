@@ -53,6 +53,21 @@ AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 AUDIO_FEATURE_ENABLED_PCM_OFFLOAD := true
 AUDIO_FEATURE_ENABLED_PCM_OFFLOAD_24 := true
 AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
+TARGET_USES_QCOM_MM_AUDIO := true
+# A2DP offload enabled for compilation
+AUDIO_FEATURE_ENABLED_A2DP_OFFLOAD := true
+
+# A2DP offload supported
+# PRODUCT_PROPERTY_OVERRIDES += \
+# ro.bluetooth.a2dp_offload.supported=true
+
+# A2DP offload disabled (UI toggle property)
+# PRODUCT_PROPERTY_OVERRIDES += \
+# persist.bluetooth.a2dp_offload.disabled=false
+
+# A2DP offload DSP supported encoder list
+# PRODUCT_PROPERTY_OVERRIDES += \
+# persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac
 
 AUDIO_USE_LL_AS_PRIMARY_OUTPUT := true
 BOARD_USES_ALSA_AUDIO := true
@@ -77,14 +92,23 @@ TARGET_USES_NON_LEGACY_POWERHAL := true
 # Dexpreopt
 WITH_DEXPREOPT_DEBUG_INFO := false
 
-# Display
+# Rendering
+OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 TARGET_SCREEN_DENSITY := 580
-TARGET_USES_ION := true
-TARGET_USES_C2D_COMPOSITION := true
-TARGET_USES_GRALLOC1_ADAPTER := true
-TARGET_USES_HWC2 := true
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000
 TARGET_DISABLE_POSTRENDER_CLEANUP := true
+
+TARGET_USES_ION := true
+TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_HWC2 := true
+
+# Gralloc / HWC
+TARGET_USES_GRALLOC1_ADAPTER := true
+
+# Vsync
+VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
+SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 # Encryption
 TARGET_HW_DISK_ENCRYPTION := true

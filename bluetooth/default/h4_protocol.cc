@@ -61,9 +61,13 @@ void H4Protocol::OnPacketReady() {
     case HCI_PACKET_TYPE_ISO_DATA:
       iso_cb_(hci_packetizer_.GetPacket());
       break;
+    case HCI_PACKET_TYPE_UNKNOWN:
+      ALOGE("%s: Unknown packet sent", __func__);
+      break;
     default:
       LOG_ALWAYS_FATAL("%s: Unimplemented packet type %d", __func__,
                        static_cast<int>(hci_packet_type_));
+      break;
   }
   // Get ready for the next type byte.
   hci_packet_type_ = HCI_PACKET_TYPE_UNKNOWN;
@@ -87,15 +91,12 @@ void H4Protocol::OnDataReady(int fd) {
                          static_cast<unsigned int>(bytes_read));
       }
     }
-    
-    if (buffer[0] == 0)
-    {
-      ALOGE("%s: filtering out bougus packet", __func__);
-      return OnDataReady(fd);
-    }
-    
+
     hci_packet_type_ = static_cast<HciPacketType>(buffer[0]);
-    if (hci_packet_type_ != HCI_PACKET_TYPE_ACL_DATA &&
+    if (hci_packet_type_ == HCI_PACKET_TYPE_UNKNOWN) {
+      ALOGE("%s: Unknown packet sent", __func__);
+    } 
+    else if (hci_packet_type_ != HCI_PACKET_TYPE_ACL_DATA &&
         hci_packet_type_ != HCI_PACKET_TYPE_SCO_DATA &&
         hci_packet_type_ != HCI_PACKET_TYPE_EVENT) {
       LOG_ALWAYS_FATAL("%s: Unimplemented packet type %d", __func__,

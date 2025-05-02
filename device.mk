@@ -40,7 +40,10 @@ PRODUCT_PACKAGES += \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing
-    
+
+# android.hardware.bluetooth.a2dp@1.0-impl
+# android.hardware.bluetooth.a2dp@1.0-service
+
 # BT + KEYPAD
 PRODUCT_PACKAGES += \
 	prop_loader

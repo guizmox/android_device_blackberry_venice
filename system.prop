@@ -2,6 +2,15 @@
 af.fast_track_multiplier=1
 audio.deep_buffer.media=true
 audio.offload.video=true
+audio.offload.disable=false
+audio.offload.supported=true
+vendor.audio.offload.buffer.size.kb=64
+vendor.audio.offload.gapless.enabled=true
+audio.offload.pcm.16bit.enable=true
+audio.offload.pcm.24bit.enable=true
+av.offload.enable=true
+av.streaming.offload.enable=true
+audio.offload.multiple.enabled=false 
 persist.audio.camcorder.stereo=true
 persist.vendor.audio.fluence.audiorec=false
 persist.vendor.audio.fluence.speaker=false
@@ -9,34 +18,38 @@ persist.vendor.audio.fluence.voicecall=false
 persist.vendor.audio.fluence.voicerec=false
 persist.vendor.audio.fluence.mode=none
 ro.config.media_vol_steps=25
-ro.config.vc_call_vol_steps=7
+ro.config.vc_call_vol_steps=8
 ro.audio.flinger_standbytime_ms=300
 ro.vendor.audio.sdk.fluencetype=none
 vendor.audio_hal.period_size=192
-vendor.audio.offload.buffer.size.kb=64
-vendor.audio.offload.gapless.enabled=true
-audio.offload.pcm.16bit.enable=false
-audio.offload.pcm.24bit.enable=false
 vendor.voice.path.for.pcm.voip=true
+persist.speaker.prot.enable=false
+persist.spkr.cal.duration=0
+persist.spkrprot.bbry.calibrate=true
+persist.spkrprot.bbry.enable=true
+persist.spkrprot.bbry.idletime=300
+qcom.hw.aac.encoder=true
+vendor.audio.feature.a2dp_offload.enable=true
+
 
 # Bluetooth
-persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac-ldac
-persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac-ldac
-persist.bt.enableAptXHD=true
 persist.service.btui.use_aptx=1
 bluetooth.enable_timeout_ms=12000
 ro.bluetooth.hfp.ver=1.7
-ro.bluetooth.dun=false
-ro.bluetooth.wipower=false
 ro.bluetooth.emb_wp_mode=true
-bluetooth.hfp.client=1
 qcom.bluetooth.soc=rome
-persist.service.bt.hfp.client=false
+ro.bluetooth.wipower=true
+persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac-ldac
+persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac-ldac
+persist.bluetooth.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac-ldac
+# bluetooth.hfp.client=0
+# persist.service.bt.hfp.client=false
 # persist.service.bdroid.bdaddr=11:22:33:44:55:66
+# ro.bluetooth.dun=false
+# persist.bt.enableAptXHD=true
 
 # Camera
 persist.camera.HAL3.enabled=1
-
 persist.camera.cpp.duplication=false
 ro.qc.sdk.camera.facialproc=false
 ro.qc.sdk.gestures.camera=false
@@ -49,10 +62,10 @@ persist.vendor.dpm.feature=11
 
 # Dalvik heap
 dalvik.vm.heapstartsize=8m
-dalvik.vm.heapgrowthlimit=288m
+dalvik.vm.heapgrowthlimit=256m
 dalvik.vm.heapsize=512m
 dalvik.vm.heaptargetutilization=0.75
-dalvik.vm.heapminfree=2m
+dalvik.vm.heapminfree=1m
 dalvik.vm.heapmaxfree=8m
 
 # Dexopt
@@ -62,6 +75,7 @@ dalvik.vm.dex2oat-threads=4
 dalvik.vm.image-dex2oat-threads=4
 
 # Display
+debug.sf.disable_hwc_vsync=false
 debug.sf.enable_gl_backpressure=1
 debug.sf.latch_unsignaled=1
 ro.qualcomm.cabl=0
@@ -76,6 +90,7 @@ persist.hwc.ptor.enable=true
 # persist.mdpcomp_perfhint=50
 persist.metadata_dynfps.disable=true
 ro.opengles.version=196610
+# debug.hwc.vsync=1
 
 # GPS
 # persist.gps.qc_nlp_in_use=1
@@ -147,7 +162,7 @@ telephony.lteOnCdmaDevice=1
 DEVICE_PROVISIONED=1
 
 # Surfaceflinger
-ro.surface_flinger.max_frame_buffer_acquired_buffers=4
+ro.surface_flinger.max_frame_buffer_acquired_buffers=2
 
 # WiFi
 wifi.interface=wlan0

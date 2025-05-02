@@ -1317,7 +1317,9 @@ void hw_config_start(void)
 **
 *******************************************************************************/
 uint8_t hw_lpm_enable(uint8_t turn_on)
-{
+{ 
+    ALOGI("hw_lpm_enable %d", turn_on);
+
     HC_BT_HDR  *p_buf = NULL;
     uint8_t     *p;
     uint8_t     ret = FALSE;

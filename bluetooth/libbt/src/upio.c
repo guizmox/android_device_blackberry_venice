@@ -352,7 +352,9 @@ int upio_set_bluetooth_power(int on)
     if (fd >= 0)
         close(fd);
 
-    ms_delay(100);
+    /*    
+        ms_delay(500);
+    */
 
     return ret;
 }
