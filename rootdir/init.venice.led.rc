@@ -51,7 +51,7 @@ on post-fs-data
     chmod 0664 /sys/class/leds/led:rgb_blue/blink
 
     chown system system /sys/class/leds/kpd-backlight/brightness
-    chmod 0664 /sys/class/leds/kpd-backlight/brightness
+    chmod 0666 /sys/class/leds/kpd-backlight/brightness
 
     chown system system /sys/class/leds/mute/brightness
     chmod 0664 /sys/class/leds/mute/brightness
@@ -67,3 +67,6 @@ on post-fs-data
 
     chown system system /sys/class/timed_output/vibrator/enable
     chmod 0664 /sys/class/timed_output/vibrator/enable
+
+    chown system system /sys/class/input/input1/enable_device
+    chmod 0666 /sys/class/input/input1/enable_device

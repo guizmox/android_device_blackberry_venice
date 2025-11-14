@@ -3,6 +3,7 @@
 ################################################################################
 # helper functions to allow Android init like script
 
+
 function write() {
     echo -n $2 > $1
 }
@@ -54,11 +55,11 @@ restorecon -R /sys/devices/system/cpu # must restore after interactive
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 1
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 39000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 90
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 70
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 787200
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 864000
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy 1
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 90
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 70
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 40000
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 80000
 write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 384000
@@ -73,11 +74,11 @@ restorecon -R /sys/devices/system/cpu # must restore after interactive
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 1
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 1
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 19000
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 90
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 65
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 20000
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 1248000
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 864000
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 1
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads 85
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads 65
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 40000
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis 80000
 write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 384000
@@ -85,10 +86,10 @@ write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 384000
 # Configure core_ctl
 write /sys/devices/system/cpu/cpu4/core_ctl/min_cpus 0
 write /sys/devices/system/cpu/cpu4/core_ctl/max_cpus 2
-write /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres 60
-write /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres 30
+write /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres 30
+write /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres 15
 write /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms 100
-write /sys/devices/system/cpu/cpu4/core_ctl/task_thres 2
+write /sys/devices/system/cpu/cpu4/core_ctl/task_thres 1
 write /sys/devices/system/cpu/cpu4/core_ctl/is_big_cluster 1
 chown system:system /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
 chown system:system /sys/devices/system/cpu/cpu4/core_ctl/max_cpus
@@ -98,8 +99,8 @@ write /proc/sys/kernel/sched_migration_fixup 1
 write /proc/sys/kernel/sched_small_task 30
 write /proc/sys/kernel/sched_mostly_idle_load 20
 write /proc/sys/kernel/sched_mostly_idle_nr_run 3
-write /proc/sys/kernel/sched_downmigrate 50
-write /proc/sys/kernel/sched_upmigrate 70
+write /proc/sys/kernel/sched_downmigrate 20
+write /proc/sys/kernel/sched_upmigrate 40
 write /proc/sys/kernel/sched_init_task_load 50
 write /proc/sys/kernel/sched_freq_inc_notify 400000
 write /proc/sys/kernel/sched_freq_dec_notify 400000
@@ -116,7 +117,7 @@ get-set-forall /sys/class/devfreq/qcom,mincpubw*/governor cpufreq
 write /proc/sys/kernel/sched_boost 0
 
 # set GPU default power level to 5 (180MHz) instead of 4 (305MHz)
-write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 5
+write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 4
 
 # android background processes are set to nice 10. Never schedule these on the a57s.
 write /proc/sys/kernel/sched_upmigrate_min_nice 9

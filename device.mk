@@ -28,6 +28,10 @@ PRODUCT_ENFORCE_RRO_TARGETS := framework-res
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ld.config.txt:$(TARGET_COPY_OUT_SYSTEM)/etc/swcodec/ld.config.txt
 
+#Trim
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/utils/fstrim:$(TARGET_COPY_OUT_SYSTEM)/bin/fstrim
+    
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
@@ -44,6 +48,11 @@ PRODUCT_PACKAGES += \
 # android.hardware.bluetooth.a2dp@1.0-impl
 # android.hardware.bluetooth.a2dp@1.0-service
 
+# Boot animation
+PRODUCT_COPY_FILES := $(filter-out %/bootanimation.zip:system/media/bootanimation.zip,$(PRODUCT_COPY_FILES))
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/bootanimation.zip:system/media/bootanimation.zip
+
 # BT + KEYPAD
 PRODUCT_PACKAGES += \
 	prop_loader
@@ -55,16 +64,17 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
+    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml \
+    $(LOCAL_PATH)/audio/aanc_tuning_mixer.txt:$(TARGET_COPY_OUT_SYSTEM)/etc/aanc_tuning_mixer.txt \
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_Bluetooth_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Bluetooth_cal.acdb \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_General_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_General_cal.acdb \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_Global_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Global_cal.acdb \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_Handset_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Handset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_Hdmi_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Hdmi_cal.acdb \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_Headset_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Headset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdbdata/Venice_Speaker_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Speaker_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_Bluetooth_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Bluetooth_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_General_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_General_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_Global_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Global_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_Handset_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Handset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_Hdmi_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Hdmi_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_Headset_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Headset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/venice/Venice_Speaker_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/venice/Venice_Speaker_cal.acdb \
     frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
@@ -86,7 +96,8 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.msm8992 \
-    Snap
+    Snap \
+    libcamera_shim \
 
 # CryptfsHW
 PRODUCT_PACKAGES += \
@@ -110,7 +121,10 @@ PRODUCT_PACKAGES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.4-service.clearkey \
+    libshim_drm \
+    libshim_sc \
 
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
@@ -123,13 +137,26 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/gps/gps.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/gps.conf
+    $(LOCAL_PATH)/gps/flp.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/flp.conf \
+    $(LOCAL_PATH)/gps/gps.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/gps.conf \
+    $(LOCAL_PATH)/gps/izat.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/izat.conf \
+    $(LOCAL_PATH)/gps/sap.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/sap.conf
 
+# GPS
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl.legacy \
     android.hardware.gnss@1.0-service.legacy \
     gps.msm8992 \
-    libshims_get_process_name
+    libshims_get_process_name \
+
+#GNSS HAL
+#PRODUCT_PACKAGES += \
+#    android.hardware.gnss@1.0-impl
+
+# GPS
+#PRODUCT_PACKAGES += \
+#    libgps.utils \
+#    gps.msm8992
 
 # Healthd
 PRODUCT_PACKAGES += \
@@ -149,8 +176,8 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_PACKAGES += \
     init.venice.led.rc \
-    init.venice.poweroff_charging.rc \
     init.venice.target.rc \
+    init.venice.power.rc \
     init.venice.usb.rc \
     init.qcom.rc \
     init.qcom.sh \
@@ -176,6 +203,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl \
     android.hardware.keymaster@3.0-service
+
+# Keymaster
+#PRODUCT_PACKAGES += \
+#    keystore.msm8992
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -264,8 +295,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.sip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
-
+    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.telephony.ims.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-1.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_1.xml \
+    
 # Privapp Whitelist
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
@@ -277,6 +312,7 @@ PRODUCT_PACKAGES += \
     power.msm8992 \
     init.venice.power.sh \
     init.venice.zram.sh \
+    init.venice.maintenance.sh \
     init.qcom.sh
 
 # Power
@@ -293,7 +329,14 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     libxml2 \
     libaudioclient_shim \
-    libbb_tokenservice
+    libbb_tokenservice \
+    libcutils_shim
+
+# IMS
+PRODUCT_PACKAGES += \
+    ims-ext-common \
+    ims_ext_common.xml \
+    com.android.ims.rcsmanager
 
 # RenderScript
 PRODUCT_PACKAGES += \
@@ -316,7 +359,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine-8992.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8992.conf
+    $(LOCAL_PATH)/configs/thermal-engine-8992.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine.conf
 
 # Trust HAL
 PRODUCT_PACKAGES += \

@@ -63,7 +63,15 @@ $(RFS_APQ_GNSS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /firmware $@/readonly/firmware
 	$(hide) ln -sf /persist/rfs/apq/gnss $@/readwrite
 	$(hide) ln -sf /persist/rfs/shared $@/shared
-
+	
 ALL_DEFAULT_INSTALLED_MODULES += $(RFS_MSM_ADSP_SYMLINKS) $(RFS_MSM_MPSS_SYMLINKS) $(RFS_APQ_GNSS_SYMLINKS)
+
+IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
+IMS_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/app/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
+$(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "IMS lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
 
 endif

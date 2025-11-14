@@ -197,16 +197,22 @@ vendor/lib/libmmcamera_s5k3m2xm.so
 vendor/lib/libmmcamera_s5k5e2evt1.so
 vendor/lib/libmmcamera_s5k5e2.so
 
+#IMS
+system/bin/imsdatadaemon
+system/bin/imsqmidaemon
+system/bin/ims_rtp_daemon
+
 # CNE
 -priv-app/CNEService/CNEService.apk|27df91d560aae04390f091206d4645e8943cecc2
-vendor/bin/cnd|ea4d5acd2b8f7de399932bab9e5b9ec8dd57b13c
+-priv-app/BlackBerryKeyboard/BlackBerryKeyboard.apk|fe89249e0d55002edb58f29696fc8fb8640e8a9a
+vendor/bin/cnd|3591db4c8527f4441e7704bd2441d2d4
 vendor/lib64/com.quicinc.cne.api@1.0.so|f9a8a94e74c6283ddf5986d8e7cd3c8c1687605f
 vendor/lib64/com.quicinc.cne.constants@1.0.so|61575c715f39fb5b0c304f80e4d3bb66ca5f1237
 vendor/lib64/com.quicinc.cne.constants@2.0.so|84a2f1d0be73d987494cdc0c7b3f8fdd305837be
 vendor/lib64/com.quicinc.cne.server@2.0.so|b97dd668a6cbe6a3763cab2cb8456e686239474b
-vendor/lib64/libcne.so|f7686c5b82767229e5d6c3ca7f2665c0f79fb7f5
-vendor/lib64/libcneapiclient.so|1e2dd92b55a323c3163a9b2771579e3ab2d5c7b8
-vendor/lib64/libcneoplookup.so|aed419cc2a6e321bc332cffe25eeede778c38946
+vendor/lib64/libcne.so|4c56531d7fcc622632254b5fa13c0c02
+vendor/lib64/libcneapiclient.so|969a2d221e06149201abd66b007762d4
+vendor/lib64/libcneoplookup.so|3bd5f1c62ae2c46c342575560264b46a
 vendor/lib64/libwms.so|8ed7fa87fbadba2ffbc28ed18ed73602f9207a73
 vendor/lib64/libwqe.so|85e2c9f13d06039b72dd733c96d2b431c9b5c2a3
 vendor/lib64/vendor.qti.hardware.data.latency@1.0_vendor.so|8eae1cb1cc6ce993d6ee1127e480fba180d341a7
@@ -220,13 +226,29 @@ vendor/lib64/libdpmqmihal.so|ec071f4b67a605481e3e64a93626c7cfd9520945
 vendor/lib64/libaptXHD_encoder.so|e13fa70c97caaa24d061678bdee608eb8850a69e
 vendor/lib64/libaptX_encoder.so|df1c89d7af1bb35808d5fe3496b04ba066c10cbc
 
-# DRM
-bin/qseecomd:vendor/bin/qseecomd
+# Widevine
+vendor/bin/qseecomd
+vendor/lib/libdrmdecrypt.so
+vendor/lib/liboemcrypto.so
+vendor/lib/mediadrm/libwvdrmengine.so
+vendor/lib64/mediadrm/libwvdrmengine.so
+vendor/lib/libdrmfs.so
+vendor/lib/libdrmtime.so
+vendor/lib/librpmb.so
+vendor/lib/libssd.so
+vendor/lib/libtzdrmgenprov.so
 vendor/lib64/libQSEEComAPI.so
 vendor/lib64/libdrmfs.so
 vendor/lib64/libdrmtime.so
+vendor/lib64/liboemcrypto.so
 vendor/lib64/librpmb.so
 vendor/lib64/libssd.so
+vendor/lib64/libtzdrmgenprov.so
+
+# 1.0 from oce
+vendor/bin/hw/android.hardware.drm@1.0-service.widevine|65da8d878c199742965e40e0ab7ac5e3c3e84098
+vendor/etc/init/android.hardware.drm@1.0-service.widevine.rc|51a3168a0dbc064d78ee11ca83614c0cd2e6daa5
+vendor/lib/libwvhidl.so|c9a1691b18f589ad3ff0a98ff2de1f8965dc1b16
 
 # Fingerprint
 lib64/lib_fpc_tac_shared.so:vendor/lib64/lib_fpc_tac_shared.so
@@ -239,22 +261,16 @@ vendor/firmware/fpctzappfingerprint.mdt
 
 # Gatekeeper
 vendor/lib64/hw/gatekeeper.msm8992.so
+vendor/lib/hw/gatekeeper.msm8992.so
 
 # GPS
-# vendor/lib64/libloc_api_v02.so|1db714846d90a94b00db54486e156b25b2a1e64e
-# vendor/lib64/libloc_ds_api.so|375785257c6dc8e8451eb25babfea9128e1d5749
-# vendor/lib64/hw/flp.default.so|8b151d16862a78df4d75f9158468cfb10fea86fe
-# vendor/lib64/libflp.so|b29bcc5ba9e9bb81b61c5f8c1db8216d15b718c3
-# vendor/lib64/libgeofence.so|96bf6e10ab1128607bc21f3064c53e978a785dfa
-# vendor/lib64/libizat_core.so|6810eccd7a7b4b49e56431fe8caa30e904154c3c
-# vendor/lib64/liblbs_core.so|f193bdf82b36ff9fde2df1d4b8e12e0e84483b59
-vendor/lib64/libloc_api_v02.so|d3d1d99b26ec13c45010c67aaf8bceda
-vendor/lib64/libloc_ds_api.so|abe9330b37590f022412afd6a3b347e5
-vendor/lib64/hw/flp.default.so|c206041267a861821bf3a9f74140ed11
-vendor/lib64/libflp.so|04a930bd523533efd255bda1a706b647
-vendor/lib64/libgeofence.so|64d945038dfa5d68a092c1f41baefc52
-vendor/lib64/libizat_core.so|629f55e550d56b0675de67c5647a8b9c
-vendor/lib64/liblbs_core.so|a2466f5b4f1154b1808042577b041268
+vendor/lib64/libloc_api_v02.so|1db714846d90a94b00db54486e156b25b2a1e64e
+vendor/lib64/libloc_ds_api.so|375785257c6dc8e8451eb25babfea9128e1d5749
+vendor/lib64/hw/flp.default.so|8b151d16862a78df4d75f9158468cfb10fea86fe
+vendor/lib64/libflp.so|b29bcc5ba9e9bb81b61c5f8c1db8216d15b718c3
+vendor/lib64/libgeofence.so|96bf6e10ab1128607bc21f3064c53e978a785dfa
+vendor/lib64/libizat_core.so|6810eccd7a7b4b49e56431fe8caa30e904154c3c
+vendor/lib64/liblbs_core.so|f193bdf82b36ff9fde2df1d4b8e12e0e84483b59
 
 # Graphics
 vendor/lib/egl/eglSubDriverAndroid.so
@@ -293,7 +309,10 @@ etc/firmware/a420_pfp.fw:vendor/firmware/a420_pfp.fw
 etc/firmware/a420_pm4.fw:vendor/firmware/a420_pm4.fw
 
 # Keystore
-vendor/lib64/hw/keystore.msm8992.so
+# vendor/lib64/hw/keystore.msm8992.so
+# vendor/lib/hw/keystore.msm8992.so
+vendor/lib64/libkmcrypto.so
+vendor/lib/libkmcrypto.so
 
 # Media
 vendor/lib/libOmxAacDec.so
@@ -422,9 +441,6 @@ vendor/lib64/libthermalioctl.so
 
 # Time services
 vendor/lib64/libtime_genoff.so
-
-# Widevine DRM
-vendor/lib/mediadrm/libwvdrmengine.so|357c84ff26ec7daa6f7f569fb31e426a6385fb65
 
 # Wifi
 bin/cnss-daemon:vendor/bin/cnss-daemon

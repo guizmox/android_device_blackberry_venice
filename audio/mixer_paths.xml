@@ -42,7 +42,7 @@
     <ctl name="ADC6 Volume" value="19" />
     <ctl name="DEC1 Volume" value="84" />
     <ctl name="DEC2 Volume" value="84" />
-    <ctl name="DEC3 Volume" value="111" />
+    <ctl name="DEC3 Volume" value="84" />
     <ctl name="DEC4 Volume" value="84" />
     <ctl name="DEC5 Volume" value="84" />
     <ctl name="DEC6 Volume" value="84" />
@@ -1337,6 +1337,7 @@
         <ctl name="SLIM TX7 MUX" value="DEC8" />
         <ctl name="DEC8 MUX" value="DMIC2" />
         <ctl name="IIR1 INP1 MUX" value="DEC8" />
+        <ctl name="DEC8 Volume" value="84" />
     </path>
 
     <path name="dmic3">
@@ -1426,7 +1427,7 @@
 
     <path name="speaker-mic-liquid">
         <path name="dmic3" />
-        <ctl name="DEC9 Volume" value="111" />
+        <ctl name="DEC9 Volume" value="84" />
     </path>
 
     <path name="speaker-mic-sbc">
@@ -1472,7 +1473,7 @@
 
     <path name="handset-mic">
         <path name="adc4" />
-        <ctl name="DEC3 Volume" value="111" />
+        <ctl name="DEC3 Volume" value="84" />
         <ctl name="ADC4 Volume" value="8" />
     </path>
 
@@ -1512,7 +1513,7 @@
 
     <path name="headset-mic">
         <path name="adc2" />
-	<ctl name="ADC2 Volume" value="14" />
+	    <ctl name="ADC2 Volume" value="14" />
     </path>
 
     <path name="headset-mic-liquid">
@@ -1711,22 +1712,30 @@
         <ctl name="ADC4 Volume" value="8" />
     </path>
 
+    <path name="dual-mic-handset">
+        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
+        <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
+        <ctl name="SLIM TX7 MUX" value="DEC4" />
+        <ctl name="DEC4 MUX" value="ADC3" />
+        <ctl name="SLIM TX8 MUX" value="DEC3" />
+        <ctl name="DEC3 MUX" value="ADC4" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
+    </path>
+	
+    <path name="camcorder-stereo-dmic">
+        <path name="dual-mic-handset" />
+        <ctl name="ADC3 Volume" value="15" />
+        <ctl name="DEC4 Volume" value="100" />
+        <ctl name="ADC4 Volume" value="15" />
+        <ctl name="DEC3 Volume" value="100" />
+    </path>
+	
     <path name="camcorder-mic">
         <ctl name="AIF1_CAP Mixer SLIM TX7" value="1"/>
-        <ctl name="SLIM_0_TX Channels" value="Two" />
-        <ctl name="SLIM TX7 MUX" value="DEC3" />
-        <ctl name="DEC3 MUX" value="ADC4" />
-        <ctl name="ADC4 Volume" value="8" />
-        <ctl name="DEC3 Volume" value="111" />
-        <ctl name="IIR1 INP1 MUX" value="DEC3" />
-        <ctl name="AIF1_CAP Mixer SLIM TX8" value="1"/>
-        <ctl name="SLIM TX8 MUX" value="DEC4" />
-        <ctl name="DEC4 MUX" value="ADC3" />
-        <ctl name="ADC3 Volume" value="12" />
-        <ctl name="DEC4 Volume" value="84" />
-        <ctl name="IIR1 INP1 MUX" value="DEC4" />
-        <ctl name="ADC3 Volume" value="10" />
-        <ctl name="ADC4 Volume" value="8" />
+        <ctl name="SLIM_0_TX Channels" value="One" />
+        <ctl name="SLIM TX7 MUX" value="DEC7" />
+        <ctl name="DEC7 MUX" value="DMIC1" />
+        <ctl name="IIR1 INP1 MUX" value="DEC7" />
     </path>
 
     <path name="hdmi-tx">

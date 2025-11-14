@@ -23,28 +23,14 @@
     </array>
     <array name="cpu.speeds.cluster0">
         <value>384000</value>
-        <value>460800</value>
-        <value>600000</value>
-        <value>672000</value>
         <value>787200</value>
-        <value>864000</value>
         <value>960000</value>
-        <value>1248000</value>
         <value>1440000</value>
     </array>
     <array name="cpu.speeds.cluster1">
         <value>384000</value>
-        <value>480000</value>
-        <value>633600</value>
-        <value>768000</value>
         <value>864000</value>
-        <value>960000</value>
         <value>1248000</value>
-        <value>1344000</value>
-        <value>1440000</value>
-        <value>1536000</value>
-        <value>1632000</value>
-        <value>1689600</value>
         <value>1824000</value>
     </array>
     <item name="cpu.idle">6.30</item>
@@ -79,7 +65,7 @@
         <value>4</value>
         <value>2</value>
     </array>
-    <item name="battery.capacity">2680</item>
+    <item name="battery.capacity">3410</item>
     <array name="wifi.batchedscan">
         <value>.0076</value>
         <value>.0613</value>

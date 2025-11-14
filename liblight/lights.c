@@ -49,6 +49,7 @@
 #define PM_PWM_LUT_USE_RAW_VALUE	0x40
 
 #define LCD_FILE "/sys/class/leds/lcd-backlight/brightness"
+#define LCD_MAX_BRIGHTNESS "/sys/class/leds/lcd-backlight/max_brightness"
 
 #define RED_BRIGHTNESS_FILE "/sys/class/leds/led:rgb_red/brightness"
 #define RED_DUTY_PCTS_FILE "/sys/class/leds/led:rgb_red/duty_pcts"
@@ -80,13 +81,14 @@
 #define KEYBOARD_FILE "/sys/class/leds/kpd-backlight/brightness"
 
 #define LED_DUTY_STEPS       20
-#define LED_RAMP_MS          500
+#define LED_RAMP_MS          300
 
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 static struct light_state_t g_battery;
 static struct light_state_t g_notification;
 static struct light_state_t g_attention;
 static int g_keyboard_brightness;
+static int g_screen_on = -1;
 
 static int write_int(const char *path, int value)
 {
@@ -258,8 +260,56 @@ static void handle_speaker_light_locked(struct light_device_t *dev)
     }
 }
 
+static int read_max_brightness(const char *path)
+{
+    int fd = open(path, O_RDONLY);
+    if (fd < 0) return -errno;
+
+    char buf[32] = {0};
+    ssize_t n = read(fd, buf, sizeof(buf)-1);
+    int saved = errno;
+    close(fd);
+    if (n <= 0) return -saved;
+
+    return atoi(buf);
+}
+
+static int fade_keyboard(int from, int to)
+{
+    const int steps = LED_DUTY_STEPS;
+    const int total_ms = LED_RAMP_MS;
+    const int step_delay = total_ms / steps;
+    int err = 0;
+
+    if (to > from) {
+        int delta = (to - from) / steps;
+        if (delta < 1) delta = 1;
+
+        for (int val = from; val < to; val += delta) {
+            err = write_int(KEYBOARD_FILE, val);
+            if (err < 0) return err;
+            usleep(step_delay * 1000);
+        }
+        err = write_int(KEYBOARD_FILE, to);
+    } else if (to < from) {
+        int delta = (from - to) / steps;
+        if (delta < 1) delta = 1;
+
+        for (int val = from; val > to; val -= delta) {
+            err = write_int(KEYBOARD_FILE, val);
+            if (err < 0) return err;
+            usleep(step_delay * 1000);
+        }
+        err = write_int(KEYBOARD_FILE, to);
+    } else {
+        err = write_int(KEYBOARD_FILE, to);
+    }
+
+    return err;
+}
+
 static int set_light_backlight(struct light_device_t *dev,
-        const struct light_state_t *state)
+                               const struct light_state_t *state)
 {
     int err = 0;
     int brightness = rgb_to_brightness(state);
@@ -270,8 +320,34 @@ static int set_light_backlight(struct light_device_t *dev,
     pthread_mutex_lock(&g_lock);
 
     err = write_int(LCD_FILE, brightness);
-	
-	write_int(KEYBOARD_FILE, brightness == 0 ? 0 : g_keyboard_brightness);
+
+    int screen_on = (brightness > 0) ? 1 : 0;
+    int current_kpd = get_keypad_brightness();
+        
+    if (g_screen_on != -1 && screen_on != g_screen_on) {
+
+        ALOGV("screen_on change: %d → %d (keypad=%d)", g_screen_on, screen_on, current_kpd);
+
+        if (screen_on == 0) {
+            if (current_kpd > 0) {
+                err = fade_keyboard(g_keyboard_brightness, 0);
+            } else {
+                ALOGV("Keypad already off > skip fade-out");
+            }
+        } else {
+            err = fade_keyboard(0, g_keyboard_brightness);
+        }
+    } else {
+        if (screen_on == 1) {
+            if (current_kpd > 0) {
+                err = write_int(KEYBOARD_FILE, g_keyboard_brightness);
+            }
+        } else {
+            err = write_int(KEYBOARD_FILE, 0);
+        }
+    }
+
+    g_screen_on = screen_on;
 
     pthread_mutex_unlock(&g_lock);
 
@@ -283,6 +359,8 @@ static int set_light_keyboard(struct light_device_t *dev,
 {
     int err = 0;
     g_keyboard_brightness = rgb_to_brightness(state);
+
+    g_screen_on = (g_keyboard_brightness > 0) ? 1 : 0;
 
     if (!dev)
         return -ENODEV;

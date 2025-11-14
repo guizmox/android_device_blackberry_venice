@@ -1,30 +1,23 @@
 #!/system/bin/sh
-# Copyright (c) 2009-2015, The Linux Foundation. All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-#     * Redistributions of source code must retain the above copyright
-#       notice, this list of conditions and the following disclaimer.
-#     * Redistributions in binary form must reproduce the above copyright
-#       notice, this list of conditions and the following disclaimer in the
-#       documentation and/or other materials provided with the distribution.
-#     * Neither the name of The Linux Foundation nor
-#       the names of its contributors may be used to endorse or promote
-#       products derived from this software without specific prior written
-#       permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
 
-echo 75 > /proc/sys/vm/swappiness
-echo "18432,23040,27648,32256,27648,40320" > /sys/module/lowmemorykiller/parameters/minfree
+mem_kb=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+
+mem_mb=$((mem_kb / 1024))
+
+if [ "$mem_mb" -lt 3500 ]; then
+    log -t Configure zram "RAM < 4GB"
+    echo 80 > /proc/sys/vm/swappiness
+    echo 20 > /proc/sys/vm/vfs_cache_pressure
+    echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+    echo 81250 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+    echo "18432,23040,27648,32256,55296,80640" > /sys/module/lowmemorykiller/parameters/minfree
+    echo 20 > /proc/sys/vm/dirty_background_ratio
+    echo 40 > /proc/sys/vm/dirty_ratio
+    echo 128 > /sys/block/mmcblk0/queue/read_ahead_kb
+else
+    log -t Configure zram "RAM >= 4GB"
+    echo 30 > /proc/sys/vm/swappiness
+    echo 60 > /proc/sys/vm/vfs_cache_pressure
+    echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+    echo 256 > /sys/block/mmcblk0/queue/read_ahead_kb
+fi

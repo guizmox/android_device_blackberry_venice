@@ -26,7 +26,7 @@
 #
 
 import /vendor/etc/init/hw/init.venice.led.rc
-import /vendor/etc/init/hw/init.venice.poweroff_charging.rc
+import /vendor/etc/init/hw/init.venice.power.rc
 import /vendor/etc/init/hw/init.venice.usb.rc
 
 on boot
@@ -34,10 +34,6 @@ on boot
     # don't run as a service to avoid race conditions
     exec - root root system -- /vendor/bin/init.venice.power.sh
  
-    # adaptive LMK
-    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
-    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
-
     # Wifi firmware reload path
     chown wifi wifi /sys/module/bcmdhd/parameters/firmware_path
 
@@ -59,7 +55,8 @@ on post-fs
     chown system system /sys/class/sensors/vl6180/device/interrupt/edge
     chown system system /sys/class/sensors/vl6180/device/interrupt/active_low
     
-    exec chown -R radio:radio /persist/cellular
+    #exec chown -R radio:radio /persist/cellular
+    chown -R 1001:1001 /persist/cellular
 
 service vtnvfsd /vendor/bin/vtnvfsd -b /dev/block/bootdevice/by-name -s boardid:/nvram/boardid:rw -s nvuser:/nvram/nvuser:rw -s perm:/nvram/perm:rw -s prdid:/nvram/prdid:rw -s blog:/nvram/blog:rw
    class core
@@ -77,9 +74,25 @@ service venice_zram /system/bin/sh /vendor/bin/init.venice.zram.sh
     user root
     group root system
     oneshot
-    
+
+service venice_maintenance /system/bin/sh /vendor/bin/init.venice.maintenance.sh
+    class late_start
+    user root
+    group root
+    restart_period 86400
+
 on property:ro.hwf.keypadlanguage=*
     stop vendor_prop_loader
 
 on property:sys.boot_completed=1
+    # allow CPUs to go in deeper idle state than C0
+    write /sys/module/lpm_levels/parameters/sleep_disabled 0
+    #end boot time fs tune
+    write /sys/block/mmcblk0/queue/scheduler noop
+    write /sys/block/mmcblk0/queue/rq_affinity 0
+    write /sys/block/mmcblk0/queue/iostats 1
     start venice_zram
+
+#fix first start bluetooth issue
+on property:sys.boot_completed=1
+    exec -- /system/bin/am force-stop com.android.bluetooth

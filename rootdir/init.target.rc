@@ -54,7 +54,8 @@ on post-fs-data
     mkdir /data/tombstones/lpass 0771 system system
     mkdir /data/tombstones/wcnss 0771 system system
     mkdir /data/tombstones/dsps 0771 system system
-
+    mkdir /persist/widevine 0770 drm system
+    
 #start camera server as daemon
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
@@ -86,10 +87,10 @@ on property:sys.shutdown.requested=*
 service thermal-engine /vendor/bin/thermal-engine
     class main
     user root
-    socket thermal-send-client stream 0666 system system
+    socket thermal-send-client stream 0660 system system
     socket thermal-recv-client stream 0660 system system
-    socket thermal-recv-passive-client stream 0666 system system
-    group root
+    socket thermal-recv-passive-client stream 0660 system system
+    group root radio system
 
 service msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
     socket msm_irqbalance seqpacket 660 root system

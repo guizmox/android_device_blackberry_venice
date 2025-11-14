@@ -47,7 +47,11 @@ LOCAL_CFLAGS += \
 LOCAL_C_INCLUDES:= \
     $(TARGET_OUT_HEADERS)/gps.utils \
     $(TARGET_OUT_HEADERS)/libloc_core \
-    $(TARGET_OUT_HEADERS)/libflp
+    $(LOCAL_PATH) \
+    $(TARGET_OUT_HEADERS)/libflp \
+    $(LOCAL_PATH)/../../core \
+    $(LOCAL_PATH)/../../utils \
+    $(LOCAL_PATH)/../../utils/platform_lib_abstractions
 
 LOCAL_HEADER_LIBRARIES := libgps.utils_headers libloc_core_headers
 
@@ -92,10 +96,11 @@ LOCAL_CFLAGS += \
 LOCAL_C_INCLUDES:= \
     $(TARGET_OUT_HEADERS)/gps.utils \
     $(TARGET_OUT_HEADERS)/libloc_core \
-    $(TARGET_OUT_HEADERS)/libflp
+    $(TARGET_OUT_HEADERS)/libflp \
+    $(LOCAL_PATH)/../../core \
+    $(LOCAL_PATH)/../../utils \
+    $(LOCAL_PATH)/../../utils/platform_lib_abstractions
 
 LOCAL_MODULE_RELATIVE_PATH := hw
-
-LOCAL_HEADER_LIBRARIES := libgps.utils_headers libloc_core_headers
 
 include $(BUILD_SHARED_LIBRARY)

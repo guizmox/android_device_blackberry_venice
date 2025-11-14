@@ -45,7 +45,7 @@ AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := true
 AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT := true
 AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
 AUDIO_FEATURE_ENABLED_FLAC_OFFLOAD := true
-# AUDIO_FEATURE_ENABLED_FLUENCE := true
+AUDIO_FEATURE_ENABLED_FLUENCE := true
 AUDIO_FEATURE_ENABLED_HFP := true
 AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
 AUDIO_FEATURE_ENABLED_LOW_LATENCY_CAPTURE := true
@@ -97,7 +97,10 @@ OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 TARGET_SCREEN_DENSITY := 580
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000
 TARGET_DISABLE_POSTRENDER_CLEANUP := true
-
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
+MAX_EGL_CACHE_SIZE := 2048*1024
+USE_OPENGL_RENDERER := true
+HAVE_ADRENO_SOURCE:= false
 TARGET_USES_ION := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_HWC2 := true
@@ -112,6 +115,9 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 # Encryption
 TARGET_HW_DISK_ENCRYPTION := true
+
+# Keymaster
+# TARGET_PROVIDES_KEYMASTER := true
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 50327552
@@ -131,8 +137,11 @@ BOARD_ROOT_EXTRA_FOLDERS := firmware persist nvram nvram/blog nvram/perm nvram/n
 
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
-# Gralloc
-TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000
+#GPS
+#BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE
+#TARGET_USES_HARDWARE_QCOM_GPS := true
+#BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm8992
+#BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 
 # HIDL
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
@@ -150,7 +159,7 @@ BOARD_RAMDISK_USE_XZ := true
 TARGET_KERNEL_SOURCE := kernel/blackberry/msm8992
 TARGET_KERNEL_CONFIG := lineageos_venice_defconfig
 TARGET_KERNEL_ARCH := arm64
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 boot_cpus=0-5 loop.max_part=7 androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 boot_cpus=0-5 loop.max_part=7 androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_CUSTOM_MKBOOTIMG := $(DEVICE_PATH)/bootimg/mkbootimg.py
@@ -183,7 +192,16 @@ BOARD_SEPOLICY_DIRS += \
 
 # Shims
 TARGET_LD_SHIM_LIBS := \
-    /system/vendor/lib64/libril-qc-qmi-1.so|libaudioclient_shim.so
+    /vendor/bin/cnd|libcutils_shim.so \
+    /vendor/lib64/libcne.so|libcutils_shim.so \
+    /system/vendor/lib64/libril-qc-qmi-1.so|libaudioclient_shim.so \
+    /vendor/lib/libwvhidl.so|/vendor/lib/libprotobuf-cpp-lite-v29.so \
+    /vendor/lib/mediadrm/libwvdrmengine.so|/vendor/lib/libprotobuf-cpp-lite-v29.so \
+    /vendor/bin/hw/android.hardware.drm@1.0-service.widevine|libshim_drm.so \
+    /system/vendor/lib/libllvd_smore.so|libcamera_shim.so \
+    /system/vendor/lib/libmmcamera_chromaflash_lib.so|libcamera_shim.so \
+    /system/vendor/lib/libmmcamera_stillmore_lib.so|libcamera_shim.so \
+    /system/vendor/lib/lib-sec-disp.so|libshim_sc.so \
 
 # WiFi
 BOARD_WLAN_DEVICE           := bcmdhd

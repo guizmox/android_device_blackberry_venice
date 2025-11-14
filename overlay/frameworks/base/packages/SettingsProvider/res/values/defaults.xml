@@ -19,4 +19,7 @@
 <resources>
     <!-- Set the automatic brightness mode on by default -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
+    <bool name="def_enhanced_4g_mode_enabled">true</bool>
+    <bool name="def_ims_service_enabled">true</bool>
+    <bool name="def_volte_vt_enabled">true</bool>
 </resources>

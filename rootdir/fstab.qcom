@@ -17,3 +17,4 @@
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/recovery  /recovery          emmc    defaults                                        defaults
 /dev/block/platform/soc.0/f9824900.sdhci/by-name/misc      /misc              emmc    defaults                                        defaults
 /devices/soc.0/f98a4900.sdhci/mmc_host*                    auto               auto    defaults                                        voldmanaged=sdcard1:auto,encryptable=userdata
+/dev/block/zram0                                           none               swap    defaults                                        zramsize=536870912,max_comp_streams=4,notrim
